@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "LostAndFound.App.WinUI": {
+      "commandName": "MsixPackage"
+    }
+  }
+}
