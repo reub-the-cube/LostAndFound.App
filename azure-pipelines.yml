@@ -1,0 +1,61 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+stages:
+- stage: Build
+  displayName: 'Build'
+  jobs:
+  - job: Android
+    displayName: 'Android'
+    pool:
+      vmImage: 'windows-2019'
+  
+    steps:
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        command: 'restore'
+        restoreSolution: '**/*.sln'
+        restoreDirectory: $(Pipeline.Workspace)/.nuget/packages
+        verbosityRestore: 'Normal'
+
+    - task: XamarinAndroid@1
+      displayName: 'Build Android app'
+      inputs:
+        projectFile: '**/*droid*.csproj'
+        msbuildVersionOption: 'latest'
+        jdkOption: 'JDKVersion'
+
+  - job: iOS
+    displayName: 'iOS'
+    pool:
+      vmImage: 'macOS-10.15'
+    condition: false
+
+    steps:
+    # To manually select a Xamarin SDK version on the Hosted macOS agent, enable this script with the SDK version you want to target
+    # https://go.microsoft.com/fwlink/?linkid=871629
+    #- script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 6_12_7 
+    #  displayName: 'Select Xamarin SDK version'
+    #  enabled: true
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        command: 'restore'
+        restoreSolution: '**/*.sln'
+        restoreDirectory: $(Pipeline.Workspace)/.nuget/packages
+        verbosityRestore: 'Normal'
+
+    - task: XamariniOS@2
+      displayName: 'Build iOS app'
+      inputs:
+        solutionFile: '**/*.sln'
+        configuration: 'Release'
+        buildForSimulator: true
+        packageApp: false
