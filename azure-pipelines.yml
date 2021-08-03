@@ -19,7 +19,7 @@ stages:
     - task: UseDotNet@2
       inputs:
         packageType: 'sdk'
-        version: 6
+        version: 6.0
         includePreviewVersions: true
         
     - task: VSBuild@1
