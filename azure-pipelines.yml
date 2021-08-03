@@ -16,6 +16,12 @@ stages:
       vmImage: 'windows-2019'
   
     steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: 
+        includePreviewVersions: true
+        
     - task: VSBuild@1
       inputs:
         solution: '**\*.sln'
