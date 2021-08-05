@@ -22,7 +22,7 @@ stages:
         packageType: 'sdk'
         version: 6.x
         includePreviewVersions: true
-        installationPath: 'C:\Program Files\'
+        installationPath: 'C:\Program Files\dotnet\'
 
     - task: PowerShell@2
       displayName: "PowerShell debug commands"
