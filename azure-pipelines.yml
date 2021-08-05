@@ -26,7 +26,8 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          $wheresDotnet = where dotnet
+          dotnet --info
+          $wheresDotnet = dotnet --info
           Write-Host  "##vso[task.LogIssue type=warning;]This is the warning"
           Write-Host  "##vso[task.LogIssue type=warning;]This is the output: $($output)"
         
