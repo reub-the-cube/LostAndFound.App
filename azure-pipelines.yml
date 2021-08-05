@@ -17,10 +17,12 @@ stages:
   
     steps:
     - task: UseDotNet@2
+      displayName: Download dotnet SDK (version 6.x)
       inputs:
         packageType: 'sdk'
         version: 6.x
         includePreviewVersions: true
+        installationPath: 'C:\Program Files\'
 
     - task: PowerShell@2
       displayName: "PowerShell debug commands"
