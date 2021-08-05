@@ -24,12 +24,18 @@ stages:
         includePreviewVersions: true
         installationPath: 'C:\Program Files\dotnet\'
 
+
     - task: PowerShell@2
       displayName: "PowerShell debug commands"
       inputs:
         targetType: 'inline'
         script: |
           dotnet --info
+      
+    - task: MSBuild@1
+      inputs:
+        solution: '**/*.sln'
+        restoreNugetPackages: true
         
     - task: VSBuild@1
       inputs:
