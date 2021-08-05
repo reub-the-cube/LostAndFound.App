@@ -26,9 +26,9 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          where dotnet
+          $wheresDotnet = where dotnet
           Write-Host  "##vso[task.LogIssue type=warning;]This is the warning"
-          # Write-Host  "##vso[task.LogIssue type=warning;]This is the output: $($output)"
+          Write-Host  "##vso[task.LogIssue type=warning;]This is the output: $($output)"
         
     - task: VSBuild@1
       inputs:
