@@ -21,10 +21,14 @@ stages:
         packageType: 'sdk'
         version: 6.x
         includePreviewVersions: true
+
     - task: PowerShell@2
       inputs:
         targetType: 'inline'
-        script: 'where dotnet'
+        script: |
+          $output = 'where dotnet'
+          Write-Host  "##vso[task.LogIssue type=warning;]This is the warning"
+          Write-Host  "##vso[task.LogIssue type=warning;]This is the output: $($output)"
         
     - task: VSBuild@1
       inputs:
