@@ -15,6 +15,12 @@ stages:
     pool:
       vmImage: 'windows-2019'
   
+    variables:
+      - name: scriptsDirectory
+        value: '$(Build.SourcesDirectory)/eng/scripts/'
+      - name: srcDirectory
+        value: '$(Build.SourcesDirectory)/src/'
+
     steps:
     - task: UseDotNet@2
       displayName: Download dotnet SDK (version 6.x)
@@ -30,11 +36,14 @@ stages:
         targetType: 'inline'
         script: |
           dotnet --info
-
+    
     - task: PowerShell@2
-      displayName: Build app
+      displayName: Install MAUI pre-requisites
       inputs:
-        targetType: 'inline'
-        workingDirectory: $(Build.SourcesDirectory)
-        script: |
-          dotnet build
+        filePath: '$(scriptsDirectory)install-maui-prerequisites.ps1'
+    
+    - task: PowerShell@2
+      displayName: Build
+      inputs:
+        filePath: '$(scriptsDirectory)build-app.ps1'
+        workingDirectory: '$(srcDirectory)'
