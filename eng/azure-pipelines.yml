@@ -1,0 +1,40 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+stages:
+- stage: Build
+  displayName: 'Build'
+  jobs:
+  - job: Android
+    displayName: 'Android'
+    pool:
+      vmImage: 'windows-2019'
+  
+    steps:
+    - task: UseDotNet@2
+      displayName: Download dotnet SDK (version 6.x)
+      inputs:
+        packageType: 'sdk'
+        version: 6.x
+        includePreviewVersions: true
+        installationPath: 'C:\Program Files\dotnet\'
+
+    - task: PowerShell@2
+      displayName: PowerShell debug commands
+      inputs:
+        targetType: 'inline'
+        script: |
+          dotnet --info
+
+    - task: PowerShell@2
+      displayName: Build app
+      inputs:
+        targetType: 'inline'
+        workingDirectory: $(Build.SourcesDirectory)
+        script: |
+          dotnet build
